@@ -7,5 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
+model habits {
+  id    Int    @id @default(autoincrement())
+  title String
+}

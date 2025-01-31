@@ -1,10 +1,9 @@
-import { ClerkProvider, SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
+import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
 import Link from 'next/link';
 
 export default function Landing() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white flex flex-col items-center justify-center text-center px-4 pt-16">
-      <ClerkProvider>
         <nav className="absolute top-5 left-5 text-lg font-semibold flex items-center gap-3 mx-10">
           <span className="text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent drop-shadow-lg">🚀</span>
           <span className="text-xl font-extrabold tracking-wide bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent ">
@@ -21,7 +20,7 @@ export default function Landing() {
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <Link href={'/home'} className="bg-gradient-to-r from-blue-500 to-green-500 px-4 py-2 rounded-lg shadow-md">
+            <Link href={'/habit'} className="bg-gradient-to-r from-blue-500 to-green-500 px-4 py-2 rounded-lg shadow-md">
               Sign In
             </Link>
           </SignedIn>
@@ -37,14 +36,14 @@ export default function Landing() {
 
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md mx-auto">
             <SignedOut>
-              <Link href="/home">
+              <Link href="/habit">
                 <button className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-green-500 px-8 py-3 rounded-lg text-lg font-semibold shadow-lg">
                   Start Using Tracklytic
                 </button>
               </Link>
             </SignedOut>
             <SignedIn>
-              <Link href="/home">
+              <Link href="/habit">
                 <button className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-green-500 px-8 py-3 rounded-lg text-lg font-semibold shadow-lg">
                   Go to dashboard
                 </button>
@@ -72,7 +71,6 @@ export default function Landing() {
         <footer className="mt-16 text-sm text-gray-500 py-6">
           <p>© {new Date().getFullYear()} Tracklytic. All rights reserved.</p>
         </footer>
-      </ClerkProvider>
     </div>
   );
 }
