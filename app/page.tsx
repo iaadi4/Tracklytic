@@ -1,18 +1,18 @@
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { ClerkProvider, SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
 import Link from 'next/link';
 
 export default function Landing() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white flex flex-col items-center justify-center text-center px-4 pt-16">
       <ClerkProvider>
-        <nav className="absolute top-5 left-5 text-lg font-semibold flex items-center gap-3">
+        <nav className="absolute top-5 left-5 text-lg font-semibold flex items-center gap-3 mx-10">
           <span className="text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent drop-shadow-lg">🚀</span>
           <span className="text-xl font-extrabold tracking-wide bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent ">
             Tracklytic
           </span>
         </nav>
 
-        <div className="absolute top-5 right-5 text-sm flex gap-4">
+        <div className="absolute top-5 right-10 text-sm flex gap-4">
           <SignedOut>
             <SignInButton mode="modal">
               <button className="bg-gradient-to-r from-blue-500 to-green-500 px-4 py-2 rounded-lg shadow-md">
@@ -21,7 +21,9 @@ export default function Landing() {
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <UserButton afterSwitchSessionUrl="/home" />
+            <Link href={'/home'} className="bg-gradient-to-r from-blue-500 to-green-500 px-4 py-2 rounded-lg shadow-md">
+              Sign In
+            </Link>
           </SignedIn>
         </div>
 
