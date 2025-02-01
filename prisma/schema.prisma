@@ -7,7 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model habits {
-  id    Int    @id @default(autoincrement())
-  title String
+model Habit {
+  id       Int             @id @default(autoincrement())
+  title    String
+  tracking HabitTracking[]
+}
+
+model HabitTracking {
+  id       Int   @id @default(autoincrement())
+  habitId  Int
+  month    Int
+  year     Int
+  goal     Int   @default(0)
+  achieved Int   @default(0)
+  habit    Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  @@unique([habitId, month, year])
 }
