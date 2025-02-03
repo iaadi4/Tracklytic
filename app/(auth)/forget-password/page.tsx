@@ -18,7 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import loginSchema from "@/lib/schemas/loginSchema";
+import forgotPassowordSchema from "@/lib/schemas/forgotPasswordSchema";
 import Link from "next/link";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -27,40 +27,43 @@ import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { LoaderCircle } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export default function Signup() {
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof forgotPassowordSchema>>({
+    resolver: zodResolver(forgotPassowordSchema),
     defaultValues: {
-      email: "",
-      password: ""
+      email: ""
     },
   })
 
-  async function onSubmit(values: z.infer<typeof loginSchema>) {
-    const { email, password } = values;
-    const { data, error } = await authClient.signIn.email({
+  async function onSubmit(values: z.infer<typeof forgotPassowordSchema>) {
+    const { email } = values;
+    const { data, error } = await authClient.forgetPassword({
       email,
-      password,
-      callbackURL: "/home"
+      redirectTo: "/login"
     }, {
       onRequest: () => {
         setLoading(true);
         toast("Please wait", {
           position: "top-right",
-          duration: 3000,
+          duration: 4000,
           icon: <LoaderCircle className="animate-spin h-4 w-4" />
         })
       },
       onSuccess: () => {
         setLoading(false);
+        toast.success("Reset link sent successfully", {
+          position: "top-right"
+        });
         form.reset();
+        redirect("/login")
       },
       onError: (ctx) => {
         setLoading(false);
-        toast.error(ctx.error.message || "Failed to signup, please try again!", {
+        toast.error(ctx.error.message || "Failed to send reset link, please try again!", {
           position: "top-right",
           duration: 3000
         })
@@ -72,8 +75,8 @@ export default function Signup() {
     <div className="flex h-screen w-screen justify-center items-center">
       <Card className="w-[400px]">
         <CardHeader>
-          <CardTitle>Login</CardTitle>
-          <CardDescription>Welcome back! please login to continue</CardDescription>
+          <CardTitle>Reset password</CardTitle>
+          <CardDescription>Enter you email address to get reset password link</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -86,19 +89,6 @@ export default function Signup() {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input type="email" placeholder="Enter your email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="Enter your password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

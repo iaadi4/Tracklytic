@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -18,13 +17,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import signupSchema from "@/lib/schemas/signupSchema";
 import Link from "next/link";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { authClient } from "@/lib/auth-client";
+import { toast } from 'sonner';
+import { LoaderCircle } from "lucide-react";
+import { useState } from "react";
+import { redirect } from "next/navigation";
 
 export default function Signup() {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -34,14 +41,41 @@ export default function Signup() {
       confirmPassword: ""
     },
   })
-  function onSubmit(values: z.infer<typeof signupSchema>) {
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof signupSchema>) {
+    const { name, email, password } = values;
+    const { data, error } = await authClient.signUp.email({
+      email,
+      password,
+      name,
+      callbackURL: "/login"
+    }, {
+      onRequest: () => {
+        setLoading(true);
+        toast("Please wait", {
+          position: "top-right",
+          duration: 3000,
+          icon: <LoaderCircle className="animate-spin h-4 w-4" />
+        })
+      },
+      onSuccess: () => {
+        setLoading(false);
+        form.reset();
+        redirect('/login');
+      },
+      onError: (ctx) => {
+        setLoading(false);
+        toast.error(ctx.error.message || "Failed to signup, please try again!", {
+          position: "top-right",
+          duration: 3000
+        })
+      }
+    });
   }
   return (
     <div className="flex h-screen w-screen justify-center items-center">
       <Card className="w-[400px]">
         <CardHeader>
-          <CardTitle>Signup</CardTitle>
+          <CardTitle>Sign up</CardTitle>
           <CardDescription>Create your account to get started</CardDescription>
         </CardHeader>
         <CardContent>
@@ -99,7 +133,7 @@ export default function Signup() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">Submit</Button>
+              <Button type="submit" className="w-full" disabled={loading}>Submit</Button>
             </form>
           </Form>
         </CardContent>

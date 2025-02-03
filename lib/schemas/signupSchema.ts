@@ -10,7 +10,7 @@ const signupSchema = z.object({
         .max(50, { message: "Email cannot exceed 50 characters" }),
     password: z.string()
         .min(6, { message: "Password should be atleast 6 characters long" })
-        .max(30, { message: "Password cannot exceed 50 characters" }),
+        .max(30, { message: "Password cannot exceed 30 characters" }),
     confirmPassword: z.string()
 })
     .refine((data) => data.password === data.confirmPassword, {
