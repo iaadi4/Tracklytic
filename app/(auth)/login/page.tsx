@@ -96,7 +96,12 @@ export default function Signup() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <div className="flex justify-between items-center">
+                      <FormLabel>Password</FormLabel>
+                      <FormLabel className="text-black font-semibold underline">
+                        <Link href={'/forget-password'}>Forgot password?</Link>
+                      </FormLabel>
+                    </div>
                     <FormControl>
                       <Input type="password" placeholder="Enter your password" {...field} />
                     </FormControl>
