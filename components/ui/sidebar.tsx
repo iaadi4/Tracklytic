@@ -8,25 +8,29 @@ import {
   PiggyBank,
   Settings,
   LogOut,
-  ChevronLeft
 } from 'lucide-react';
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Link from 'next/link';
 import { authClient } from '@/lib/auth-client';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 const Sidebar = () => {
   const [screenType, setScreenType] = useState('laptop');
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [activeItem, setActiveItem] = useState<number| null>(null);
+  const [activeItem, setActiveItem] = useState<number | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width >= 1024) setScreenType('laptop');
-      else if (width >= 768) setScreenType('tablet');
-      else setScreenType('mobile');
-      setIsCollapsed(width < 1024 && width >= 768);
+      if (width >= 1024) {
+        setScreenType('laptop');
+        setIsCollapsed(false);
+      } else if (width >= 768) {
+        setScreenType('tablet');
+        setIsCollapsed(true);
+      } else {
+        setScreenType('mobile');
+      }
     };
 
     handleResize();
@@ -46,11 +50,11 @@ const Sidebar = () => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          redirect('/login')
+          redirect('/login');
         },
       },
     });
-  }
+  };
 
   if (screenType === 'mobile') {
     return (
@@ -88,7 +92,7 @@ const Sidebar = () => {
       bg-gradient-to-b from-gray-50 to-white
       border-r border-gray-200
       transition-all duration-300 ease-in-out
-      ${isCollapsed ? 'w-16' : 'w-64'}
+      ${screenType === 'laptop' ? 'w-64' : isCollapsed ? 'w-16' : 'w-64'}
       shadow-lg flex flex-col
     `}>
       <div className="flex items-center justify-between p-4">
@@ -99,17 +103,6 @@ const Sidebar = () => {
         `}>
             Tracklytic
         </h1>
-        {screenType === 'laptop' && (
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-1.5 rounded-lg hover:bg-gray-100 transition-all duration-200"
-          >
-            <ChevronLeft className={`
-              h-5 w-5 transform transition-transform duration-300 
-              ${isCollapsed ? 'rotate-180' : ''}
-            `} />
-          </button>
-        )}
       </div>
 
       <ScrollArea className="flex-grow">
