@@ -11,13 +11,31 @@ import {
 } from 'lucide-react';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { authClient } from '@/lib/auth-client';
-import { redirect } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 const Sidebar = () => {
   const [screenType, setScreenType] = useState('laptop');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeItem, setActiveItem] = useState<number | null>(null);
+
+  const toolsIndexArray: [string, number][] = [
+    ["habits", 0],
+    ["attendance", 1],
+    ["money", 2],
+    ["budget", 3],
+    ["settings", 4]
+  ]
+
+  const toolsIndexMap = new Map<string, number>(toolsIndexArray);
+  const pathname = usePathname();
+  const path = pathname?.slice(1);
+
+  useEffect(() => {
+    if (path) {
+      setActiveItem(toolsIndexMap.get(path) ?? null);
+    }
+  }, [path]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -68,8 +86,8 @@ const Sidebar = () => {
               group flex flex-col items-center justify-center
               cursor-pointer transition-all duration-200 
               p-2 rounded-lg
-              ${activeItem === index 
-                ? 'bg-gray-900 text-white' 
+              ${activeItem === index
+                ? 'bg-gray-900 text-white'
                 : 'hover:bg-gray-100 text-gray-700 hover:text-gray-900'}
             `}
           >
@@ -101,7 +119,7 @@ const Sidebar = () => {
           transition-opacity duration-300 
           ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100'}
         `}>
-            Tracklytic
+          Tracklytic
         </h1>
       </div>
 
@@ -154,7 +172,7 @@ const Sidebar = () => {
               group-hover:scale-110 group-hover:rotate-12
               ${isCollapsed ? 'w-8 h-8' : 'w-6'}
             `}>
-              <LogOut className="h-5 w-5"/>
+              <LogOut className="h-5 w-5" />
             </div>
             {!isCollapsed && (
               <span className="ml-4 text-sm font-medium whitespace-nowrap">

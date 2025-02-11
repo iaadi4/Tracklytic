@@ -148,7 +148,7 @@ export async function GET() {
     const session = await auth.api.getSession({
         headers: await headers()
     });
-    if (!session || !session.user) {
+    if (!session) {
         return new Response(JSON.stringify({
             status: statusCode.UNAUTHORIZED_ACCESS,
             data: {},
