@@ -18,7 +18,7 @@ import {
 import { Input } from '@/components/ui/input';
 import Habits from '@/lib/models/habit';
 
-const HabitCard = ({ habit }: { habit: Habits}) => {
+const HabitCard = ({ habit }: { habit: Habits }) => {
     const queryClient = useQueryClient();
     const currentDate = new Date();
     const currentTracker = habit.trackers.find(
@@ -154,7 +154,9 @@ const HabitCard = ({ habit }: { habit: Habits}) => {
                         </Button>
                     </DialogTrigger>
                     <DialogContent>
-                        <DialogHeader className="text-lg font-semibold">Update Goal</DialogHeader>
+                        <DialogHeader className="text-lg font-semibold">
+                            <DialogTitle>Update Goal</DialogTitle>
+                        </DialogHeader>
                         <div>
                             <Input
                                 type="number"
