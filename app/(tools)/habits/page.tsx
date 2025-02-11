@@ -18,20 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import HabitCard from "@/components/habitComponent";
 import { toast } from "sonner";
-
-interface Habits {
-    createdAt: string;
-    id: string;
-    title: string;
-    trackers: {
-        month: number;
-        year: number;
-        goal: number;
-        achieved: number;
-    }[];
-    updatedAt: string;
-    userId: string;
-}
+import Habits from "@/lib/models/habit";
 
 export default function Habit() {
     const [habits, setHabits] = useState<Habits[]>([]);
@@ -149,17 +136,17 @@ export default function Habit() {
             {isLoading && <p className="text-center mt-32">Loading habits...</p>}
             {isError && <p className="text-center mt-32">Failed to load habits.</p>}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4 mx-5">
-                {filteredHabits.length > 0 ? (
-                    filteredHabits.map((habit) => (
-                        <HabitCard key={habit.id} habit={habit} />
-                    ))
-                ) : (
-                    <div>
-                        { !isLoading && <p className="text-center col-span-full text-gray-500">No habits found.</p>}
+            {filteredHabits.length > 0 ? (
+                filteredHabits.map((habit) => (
+                    <div key={habit.id} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4 mx-5 w-full">
+                        <HabitCard habit={habit} />
                     </div>
-                )}
-            </div>
+                ))
+            ) : (
+                <div>
+                    {!isLoading && <p className="text-center mx-auto mt-32 col-span-full text-gray-500">No habits found.</p>}
+                </div>
+            )}
         </div>
     );
 }

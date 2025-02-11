@@ -16,24 +16,9 @@ import {
     DialogTitle
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import Habits from '@/lib/models/habit';
 
-interface HabitProps {
-    habit: {
-        createdAt: string;
-        id: string;
-        title: string;
-        trackers: {
-            month: number;
-            year: number;
-            goal: number;
-            achieved: number;
-        }[];
-        updatedAt: string;
-        userId: string;
-    };
-}
-
-const HabitCard = ({ habit }: HabitProps) => {
+const HabitCard = ({ habit }: { habit: Habits}) => {
     const queryClient = useQueryClient();
     const currentDate = new Date();
     const currentTracker = habit.trackers.find(

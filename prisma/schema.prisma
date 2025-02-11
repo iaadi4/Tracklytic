@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String       @id
   name          String
   email         String
   emailVerified Boolean
@@ -17,6 +17,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   Habit         Habit[]
+  Attendance    Attendance[]
 
   @@unique([email])
   @@map("user")
@@ -90,4 +91,15 @@ model HabitTracker {
 
   @@unique([habitId, year, month])
   @@index([year, month])
+}
+
+model Attendance {
+  id            String  @id @default(uuid())
+  title         String
+  totalClass    Int     @default(0)
+  classAttended Int     @default(0)
+  UserId        String
+  user          User    @relation(fields: [userId], references: [id])
+  userId        String
+  completed     Boolean @default(false)
 }
