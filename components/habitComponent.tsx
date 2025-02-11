@@ -28,6 +28,7 @@ const HabitCard = ({ habit }: { habit: Habits}) => {
     const progress = currentTracker ? Math.min((currentTracker.achieved / currentTracker.goal) * 100, 100) : 0;
     const [newGoal, setNewGoal] = useState(currentTracker?.goal || 0);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    console.log(newGoal);
 
     const deleteHabit = useMutation({
         mutationFn: () => axios.delete('/api/habits', { data: { habitId: habit.id } }),
@@ -60,7 +61,7 @@ const HabitCard = ({ habit }: { habit: Habits}) => {
             axios.post('/api/habits', {
                 action: 'updateGoal',
                 habitId: habit.id,
-                newGoal,
+                updateGoalValue: newGoal,
             }),
         onSuccess: () => {
             toast.success('Goal updated successfully');
