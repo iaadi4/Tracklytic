@@ -136,17 +136,19 @@ export default function Habit() {
             {isLoading && <p className="text-center mt-32">Loading habits...</p>}
             {isError && <p className="text-center mt-32">Failed to load habits.</p>}
 
-            {filteredHabits.length > 0 ? (
-                filteredHabits.map((habit) => (
-                    <div key={habit.id} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4 mx-5 w-full">
-                        <HabitCard habit={habit} />
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 px-8 mt-6 w-full">
+                {filteredHabits.length > 0 ? (
+                    filteredHabits.map((habit) => (
+                        <div key={habit.id} className="w-full">
+                            <HabitCard habit={habit} />
+                        </div>
+                    ))
+                ) : (
+                    <div>
+                        {!isLoading && <p className="text-center mx-auto mt-32 col-span-full text-gray-500">No habits found.</p>}
                     </div>
-                ))
-            ) : (
-                <div>
-                    {!isLoading && <p className="text-center mx-auto mt-32 col-span-full text-gray-500">No habits found.</p>}
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }
