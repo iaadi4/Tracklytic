@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
 export async function POST(req: Request) {
-    const { action, title, goal, updateGoalValue, incrementSavingsValue, budgetId } = await req.json();
+    const { action, title, goal, updateGoalValue, updatedSavingsValue, budgetId } = await req.json();
     const session = await auth.api.getSession({
         headers: await headers()
     });
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
                 }))
             }
             try {
-                const repsonse = await prisma.budget.create({
+                const response = await prisma.budget.create({
                     data: {
                         userId,
                         title,
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
                 })
                 return new Response(JSON.stringify({
                     status: statusCode.SUCCESS,
-                    data: repsonse,
+                    data: response,
                     message: "Budget tracker created successfully",
                     error: {}
                 }))
@@ -82,8 +82,8 @@ export async function POST(req: Request) {
                     error
                 }))
             }
-        case "incrementSavings":
-            if (!incrementSavingsValue) {
+        case "updateSavings":
+            if (!updatedSavingsValue) {
                 return new Response(JSON.stringify({
                     status: statusCode.BAD_REQUEST,
                     data: {},
@@ -98,9 +98,7 @@ export async function POST(req: Request) {
                         id: budgetId
                     },
                     data: {
-                        saving: {
-                            increment: incrementSavingsValue
-                        }
+                        saving: updatedSavingsValue
                     }
                 })
                 return new Response(JSON.stringify({
