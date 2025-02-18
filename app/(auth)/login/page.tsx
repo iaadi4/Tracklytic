@@ -44,7 +44,7 @@ export default function Signup() {
     const { data, error } = await authClient.signIn.email({
       email,
       password,
-      callbackURL: "/home"
+      callbackURL: "/habits"
     }, {
       onRequest: () => {
         setLoading(true);

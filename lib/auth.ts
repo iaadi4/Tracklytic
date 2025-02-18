@@ -18,5 +18,18 @@ export const auth = betterAuth({
                 `Click on this link to reset password, ${resetUrl}`
             )
         }
+    },
+    user: {
+        changeEmail: {
+            enabled: true,
+            sendChangeEmailVerification: async ({ user, newEmail, url, token }, request) => {
+                await sendEmail(
+                    "aditya.2023ug2061@iiitranchi.ac.in",
+                    user.email,
+                    'Tracklytic: Approve email change',
+                    `Click the link to approve the change: ${url}`
+                )
+            }
+        }
     }
 } satisfies BetterAuthOptions);

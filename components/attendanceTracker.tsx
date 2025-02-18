@@ -92,9 +92,9 @@ export default function TrackerComponent({ tracker }: { tracker: Tracker }) {
     return (
         <Card
             key={tracker.id}
-            className={`border transition-colors duration-200 ${
+            className={`border transition-all duration-300 ${
                 tracker.completed ? 'bg-zinc-50' : 'bg-white'
-            } hover:shadow-md`}
+            } hover:shadow-lg hover:-translate-y-1`}
         >
             <CardHeader className="py-4">
                 <CardTitle className="flex justify-between items-center text-base">

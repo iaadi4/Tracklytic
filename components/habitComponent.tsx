@@ -73,7 +73,7 @@ const HabitCard = ({ habit }: { habit: Habits }) => {
     });
 
     return (
-        <Card className="w-full shadow-lg">
+        <Card className="w-full translate-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <div>
                     <div className="font-semibold text-lg">{habit.title}</div>
