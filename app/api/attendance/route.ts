@@ -163,6 +163,9 @@ export async function GET() {
         const response = await prisma.attendance.findMany({
             where: {
                 userId
+            },
+            orderBy: {
+                title: "asc"
             }
         })
         return new Response(JSON.stringify({

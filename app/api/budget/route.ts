@@ -142,6 +142,9 @@ export async function GET() {
         const budgets = await prisma.budget.findMany({
             where: {
                 userId
+            },
+            orderBy: {
+                title: "asc"
             }
         })
         return new Response(JSON.stringify({

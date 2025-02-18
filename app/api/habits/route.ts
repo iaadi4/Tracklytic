@@ -162,6 +162,9 @@ export async function GET() {
             where: {
                 userId,
             },
+            orderBy: {
+                title: "asc"
+            },
             include: {
                 trackers: {
                     select: {
