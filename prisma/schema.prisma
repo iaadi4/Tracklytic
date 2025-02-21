@@ -19,6 +19,7 @@ model User {
   Habit         Habit[]
   Attendance    Attendance[]
   Budget        Budget[]
+  Expenses      Expenses[]
 
   @@unique([email])
   @@map("user")
@@ -112,4 +113,16 @@ model Budget {
   user      User    @relation(fields: [userId], references: [id])
   userId    String
   completed Boolean @default(false)
+}
+
+model Expenses {
+  id        String   @id @default(uuid())
+  title     String
+  amount    Int      @default(0)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  month     Int
+  year      Int
 }
