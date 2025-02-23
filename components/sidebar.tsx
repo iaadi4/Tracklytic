@@ -22,7 +22,7 @@ const Sidebar = () => {
   const toolsIndexArray: [string, number][] = [
     ["habits", 0],
     ["attendance", 1],
-    ["money", 2],
+    ["expense", 2],
     ["budget", 3],
     ["settings", 4]
   ]
@@ -59,7 +59,7 @@ const Sidebar = () => {
   const menuItems = [
     { icon: <Calendar className="h-5 w-5" />, label: 'Habit Tracker', page: '/habits' },
     { icon: <Clock className="h-5 w-5" />, label: 'Attendance Tracker', page: '/attendance' },
-    { icon: <DollarSign className="h-5 w-5" />, label: 'Money Tracker', page: '/money' },
+    { icon: <DollarSign className="h-5 w-5" />, label: 'Money Tracker', page: '/expense' },
     { icon: <PiggyBank className="h-5 w-5" />, label: 'Budget Tracker', page: '/budget' },
     { icon: <Settings className="h-5 w-5" />, label: 'Settings', page: '/settings' }
   ];
