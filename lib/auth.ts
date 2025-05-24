@@ -9,7 +9,7 @@ export const auth = betterAuth({
     }),
     emailAndPassword: {
         enabled: true,
-        sendResetPassword: async ({ user, url, token }, request) => {
+        sendResetPassword: async ({ user, url, token }) => {
             const resetUrl = `${new URL(url).origin}/reset-password?token=${token}`
             await sendEmail(
                 "aditya.2023ug2061@iiitranchi.ac.in",
@@ -22,7 +22,7 @@ export const auth = betterAuth({
     user: {
         changeEmail: {
             enabled: true,
-            sendChangeEmailVerification: async ({ user, newEmail, url, token }, request) => {
+            sendChangeEmailVerification: async ({ user, url }) => {
                 await sendEmail(
                     "aditya.2023ug2061@iiitranchi.ac.in",
                     user.email,

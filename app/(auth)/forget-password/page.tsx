@@ -41,7 +41,7 @@ export default function Signup() {
 
   async function onSubmit(values: z.infer<typeof forgotPassowordSchema>) {
     const { email } = values;
-    const { data, error } = await authClient.forgetPassword({
+    await authClient.forgetPassword({
       email,
       redirectTo: "/login"
     }, {

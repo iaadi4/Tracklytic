@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   Calendar,
   Clock,
@@ -19,15 +19,16 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeItem, setActiveItem] = useState<number | null>(null);
 
-  const toolsIndexArray: [string, number][] = [
-    ["habits", 0],
-    ["attendance", 1],
-    ["expense", 2],
-    ["budget", 3],
-    ["settings", 4]
-  ]
-
-  const toolsIndexMap = new Map<string, number>(toolsIndexArray);
+  const toolsIndexMap = useMemo(() => {
+    const toolsIndexArray: [string, number][] = [
+      ["habits", 0],
+      ["attendance", 1],
+      ["expense", 2],
+      ["budget", 3],
+      ["settings", 4]
+    ];
+    return new Map<string, number>(toolsIndexArray);
+  }, []);
   const pathname = usePathname();
   const path = pathname?.slice(1);
 
@@ -35,7 +36,7 @@ const Sidebar = () => {
     if (path) {
       setActiveItem(toolsIndexMap.get(path) ?? null);
     }
-  }, [path]);
+  }, [path, toolsIndexMap]);
 
   useEffect(() => {
     const handleResize = () => {
