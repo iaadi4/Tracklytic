@@ -21,16 +21,20 @@ export default function Home() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-black border-black hover:bg-black hover:text-white"
-          >
-            Login
-          </Button>
-          <Button size="sm" className="bg-black text-white hover:bg-gray-800">
-            Sign Up
-          </Button>
+          <Link href="/login">
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-black border-black hover:bg-black hover:text-white"
+            >
+              Login
+            </Button>
+          </Link>
+          <Link href="/signup">
+            <Button size="sm" className="bg-black text-white hover:bg-gray-800">
+              Sign Up
+            </Button>
+          </Link>
         </div>
       </nav>
 
